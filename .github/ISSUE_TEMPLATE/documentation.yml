@@ -1,0 +1,49 @@
+name: Documentation
+description: Something in the README, the guides or a message in the add-on is wrong, missing or unclear.
+title: "[Docs] "
+labels: ["documentation", "needs-triage"]
+body:
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where is the problem?
+      options:
+        - README.md
+        - DEVELOPMENT.md
+        - CONTRIBUTING.md
+        - CHANGELOG.md
+        - A message or label inside the add-on
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem is it?
+      options:
+        - It is wrong (the add-on does something else)
+        - It is missing
+        - It is unclear
+        - It is out of date
+        - A spelling or grammar mistake
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Quote the text, or say which section. Then say what it should say.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Can you send the fix?
+      options:
+        - Yes, I would send a pull request
+        - No, I only report it
+    validations:
+      required: false

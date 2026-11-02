@@ -1,0 +1,54 @@
+{
+	"name": "local-addon-search-replace",
+	"productName": "Search & Replace",
+	"version": "0.1.0",
+	"author": "Manish Songirkar",
+	"keywords": ["local-addon", "wordpress", "wp-cli", "search-replace"],
+	"bgColor": "#51bb7b",
+	"icon": "icon.svg",
+	"slug": "search-replace",
+	"description": "Search and replace domains in a site's database through a GUI, powered by WP-CLI.",
+	"homepage": "https://github.com/manishsongirkar/local-addon-search-replace#readme",
+	"renderer": "lib/renderer.js",
+	"main": "lib/main.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/manishsongirkar/local-addon-search-replace"
+	},
+	"bugs": {
+		"url": "https://github.com/manishsongirkar/local-addon-search-replace/issues"
+	},
+	"license": "MIT",
+	"scripts": {
+		"build": "tsc",
+		"prepare": "tsc",
+		"watch": "npm run build -- --watch",
+		"lint": "biome check .",
+		"format": "biome format --write .",
+		"test": "vitest run",
+		"test:integration": "vitest run --config vitest.integration.config.ts",
+		"test:all": "npm test && npm run test:integration",
+		"dev": "node scripts/dev-sync.mjs --watch",
+		"sync": "node scripts/dev-sync.mjs",
+		"setup-git": "git config core.hooksPath .githooks",
+		"pack:check": "npm pack --dry-run"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.0",
+		"@getflywheel/local": "^10",
+		"@types/fs-extra": "^11.0.4",
+		"@types/node": "^22",
+		"@types/react": "^16.14.0",
+		"@types/react-dom": "^16.9.0",
+		"react": "^16.14.0",
+		"typescript": "^5",
+		"vitest": "^2"
+	},
+	"peerDependencies": {
+		"react": ">= 16.4.0"
+	},
+	"engines": {
+		"local-by-flywheel": ">=10.1.2"
+	},
+	"files": ["lib", "php", "icon.svg", "README.md", "LICENSE", "CHANGELOG.md"]
+}

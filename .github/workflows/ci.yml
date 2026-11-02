@@ -1,0 +1,131 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Lint, types, build and unit tests on every OS Local supports.
+  unit:
+    name: Unit tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mysqli, mbstring
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test
+
+  # lib/ is committed, so it must match the source. Fails when someone edited src/ without rebuilding.
+  lib-in-sync:
+    name: lib/ is up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: |
+          if [ -n "$(git status --porcelain -- lib)" ]; then
+            git status --short -- lib
+            echo "::error::lib/ is out of date. Run 'npm run build' and commit lib/."
+            exit 1
+          fi
+
+  # A broken issue form disappears from the "New issue" chooser without a message, so it is checked here.
+  github-forms:
+    name: Issue forms
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ruby scripts/check-github-forms.rb
+
+  # The PHP helper scripts must run on every PHP version WordPress and Local support.
+  php-versions:
+    name: PHP ${{ matrix.php }} scripts
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mysqli, mbstring
+      - run: npm ci
+      # Syntax check with the real interpreter, then the regex tests that call PHP.
+      - run: for f in php/*.php; do php -l "$f"; done
+      - run: npx vitest run tests/unit/php.test.ts tests/unit/urls.test.ts
+
+  # Real WP-CLI, real MySQL, real WordPress: the regression suite for the whole run.
+  integration:
+    name: Integration (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.4', '8.2', '8.4']
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      SR_DB_HOST: 127.0.0.1
+      SR_DB_USER: root
+      SR_DB_PASS: ''
+      SR_WP_TARBALL: ${{ github.workspace }}/.ci/wordpress.tar.gz
+      SR_WPCLI: ${{ github.workspace }}/.ci/wp-cli.phar
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mysqli, mbstring, zip
+      - run: npm ci
+      - name: Download WordPress and WP-CLI
+        run: |
+          mkdir -p .ci
+          curl -fsSL https://wordpress.org/latest.tar.gz -o .ci/wordpress.tar.gz
+          curl -fsSL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o .ci/wp-cli.phar
+      - run: npm run test:integration

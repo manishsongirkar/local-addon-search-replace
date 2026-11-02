@@ -1,0 +1,7 @@
+#!/bin/sh
+# Keeps lib/ (the build that users get) in step with src/ on every commit.
+# Turn on once per clone with: npm run setup-git
+set -e
+npm run build --silent
+git add lib
+npx biome check . --max-diagnostics=20

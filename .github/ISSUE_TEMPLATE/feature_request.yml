@@ -1,0 +1,104 @@
+name: Feature request
+description: An idea to make the add-on do something new, or do something better.
+title: "[Feature] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for the idea. Please describe the problem you want to solve first. The best solution is often not the first one.
+        Do not paste private data: use made-up names such as `my-site.test`.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you submit
+      options:
+        - label: I searched the existing issues and did not find this idea.
+          required: true
+        - label: I read the README, and the add-on does not already do this.
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem do you have?
+      description: What are you trying to do, and what stops you?
+      placeholder: When I move a site to Local I also have to change the domains of my CDN, and I cannot tell which ones.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to happen?
+      description: Describe it as you would see it on the page. A short example is better than a long design.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What do you do today instead?
+      description: Another tool, a manual step, a WP-CLI command. This shows how big the gain is.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part is it about?
+      options:
+        - Scan and the list of domains
+        - What is replaced (forms, regex, serialized data)
+        - Options and settings
+        - Multisite
+        - Big databases and speed
+        - Backup and restore
+        - Logs and history
+        - Fallback (WP-CLI cannot run)
+        - Interface, theme, accessibility
+        - Install and packaging
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How often would you use it?
+      options:
+        - Every time I use the add-on
+        - Often
+        - Sometimes
+        - Rarely
+    validations:
+      required: false
+
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Can you help build it?
+      options:
+        - Yes, I would send a pull request
+        - I can test it
+        - I can only describe it
+    validations:
+      required: false
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: Anything that could go wrong?
+      description: Data that could be changed by mistake, a slower run, a setting that could confuse people.
+    validations:
+      required: false
+
+  - type: textarea
+    id: more
+    attributes:
+      label: Anything else?
+      description: Screenshots, links, examples from other tools.
+    validations:
+      required: false

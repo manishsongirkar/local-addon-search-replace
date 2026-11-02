@@ -1,0 +1,296 @@
+name: Bug report
+description: Something does not work, gives a wrong result, or shows a wrong message.
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for the report. The more exact it is, the faster it can be fixed.
+
+        **Before you start**
+        - Look in the [troubleshooting guide](https://github.com/manishsongirkar/local-addon-search-replace#troubleshooting).
+        - Search the open and closed issues for the same problem.
+        - **Remove private data** from everything you paste: real site names, domains, e-mail addresses and folder paths.
+          Use made-up names such as `my-site.test` and `old.example.net`. Never attach a database or a backup.
+        - A security problem is not reported here. Use the private form in the chooser.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you submit
+      options:
+        - label: I searched the existing issues and did not find this problem.
+          required: true
+        - label: I removed real site names, domains, e-mail addresses and folder paths from this report.
+          required: true
+        - label: This is not a security problem.
+          required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: What is the problem?
+      description: One or two sentences.
+      placeholder: Run does nothing after I import a new database.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where does it happen?
+      options:
+        - Install or enable the add-on
+        - Scan and the list of domains
+        - Saved list or settings
+        - Dry run
+        - Run (the replace)
+        - Backup
+        - Cancel
+        - Progress bar or estimated time
+        - Logs tab or log files
+        - History tab
+        - Multisite
+        - Fallback (WP-CLI could not run)
+        - Big database or speed
+        - Theme (light or dark) or layout
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: What you did, in order. Include what you typed in Search and Replace (with made-up names) and which rows were ticked.
+      placeholder: |
+        1. Open the site, then Tools → Search & Replace.
+        2. Tick the row `https://old.example.net` and set the replace to `https://my-site.test`.
+        3. Click Dry run.
+        4. …
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead?
+      description: Include any message you saw, word for word.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: reproducible
+    attributes:
+      label: How often does it happen?
+      options:
+        - Every time
+        - Sometimes
+        - Only once
+        - I have not tried again
+    validations:
+      required: true
+
+  - type: dropdown
+    id: regression
+    attributes:
+      label: Did it work before?
+      options:
+        - It never worked
+        - It worked in an older version of the add-on
+        - It worked before I changed something on my side (Local, PHP, database, site)
+        - I do not know
+    validations:
+      required: true
+
+  - type: input
+    id: addon_version
+    attributes:
+      label: Add-on version
+      description: In Local, Preferences → Add-ons → Installed. Or the `version` in the add-on's `package.json`.
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install_method
+    attributes:
+      label: How did you install the add-on?
+      options:
+        - Release file (.tgz)
+        - Download ZIP
+        - git clone
+        - npm run dev or npm run sync (developer copy)
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: local_version
+    attributes:
+      label: Local version
+      description: Local → About Local.
+      placeholder: "10.1.2"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - macOS (Apple silicon)
+        - macOS (Intel)
+        - Windows 11
+        - Windows 10
+        - Linux (Ubuntu or Debian)
+        - Linux (Fedora or Red Hat)
+        - Linux (other)
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: db_engine
+    attributes:
+      label: Database service of the site
+      description: In Local, the site's Overview tab, "Database".
+      options:
+        - MySQL 5.6
+        - MySQL 5.7
+        - MySQL 8.0
+        - MySQL 8.4
+        - MariaDB 10.4
+        - MariaDB 10.6
+        - MariaDB 10.11
+        - MariaDB (other version)
+        - Other or not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: php_version
+    attributes:
+      label: PHP version of the site
+      options:
+        - "7.4"
+        - "8.0"
+        - "8.1"
+        - "8.2"
+        - "8.3"
+        - "8.4"
+        - "8.5"
+        - Other or not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: site_type
+    attributes:
+      label: Type of site
+      options:
+        - Single site
+        - Multisite, sub-directories
+        - Multisite, sub-domains
+        - Bedrock or WordPress in a sub-folder
+        - Other layout
+    validations:
+      required: true
+
+  - type: dropdown
+    id: database_size
+    attributes:
+      label: Size of the database
+      description: Approximate. In Local, Database tab, or in your database tool.
+      options:
+        - Less than 100 MB
+        - 100 MB to 1 GB
+        - 1 GB to 10 GB
+        - More than 10 GB
+        - I do not know
+    validations:
+      required: false
+
+  - type: dropdown
+    id: import_method
+    attributes:
+      label: How was the database put in the site?
+      description: Useful when the list of domains looks wrong or old.
+      options:
+        - Created in Local, not imported
+        - Imported with Local (Import SQL)
+        - Imported with WP-CLI (`wp db import`)
+        - Imported with phpMyAdmin or Adminer
+        - Imported with the mysql command
+        - Cloned or pulled from a host (WP Engine, Flywheel, other)
+        - Other or not sure
+    validations:
+      required: false
+
+  - type: dropdown
+    id: wpcli_works
+    attributes:
+      label: Does WP-CLI work for this site (Local's Open site shell, `wp option get home`)?
+      options:
+        - "Yes"
+        - "No"
+        - I did not try
+    validations:
+      required: false
+
+  - type: dropdown
+    id: ssl
+    attributes:
+      label: Is SSL trusted for the site in Local?
+      options:
+        - "Yes (the site opens on https)"
+        - "No (the site opens on http)"
+        - I use localhost routing
+        - I do not know
+    validations:
+      required: false
+
+  - type: textarea
+    id: settings
+    attributes:
+      label: Settings that are not the default
+      description: Which options did you change? Ticked "Case sensitive", "Replace GUID", skip columns, regex rows, workers, fallback off, and so on.
+      placeholder: Case sensitive on. One regex row. Workers 2.
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log
+      description: |
+        Paste the lines from the **Logs** tab around the problem. A run also writes a file in `<site folder>/search-replace/logs/`.
+        For a problem that happens when you click something, the `activity-<date>.log` file of that day helps most.
+        **Remove private data first.**
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Drag images here. Hide private names and domains first.
+    validations:
+      required: false
+
+  - type: textarea
+    id: more
+    attributes:
+      label: Anything else?
+      description: Other add-ons you use, a workaround you found, or a guess about the cause.
+    validations:
+      required: false

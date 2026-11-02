@@ -1,0 +1,137 @@
+name: Compatibility report
+description: You tried the add-on on a system the project has not tested. Tell us if it worked, or what broke.
+title: "[Compat] "
+labels: ["compatibility", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The add-on is tried by hand in Local on macOS, and its tests run on MySQL 8.0 and 8.4. A report that something **works** is as
+        useful as one that does not.
+
+        Use the **Bug report** form when you have a problem you want fixed. Use this form for "I tried it here, and this is what I saw".
+        Do not paste private data.
+
+  - type: dropdown
+    id: result
+    attributes:
+      label: Result
+      options:
+        - Everything worked
+        - Worked with small problems
+        - Did not work
+    validations:
+      required: true
+
+  - type: input
+    id: addon_version
+    attributes:
+      label: Add-on version
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: input
+    id: local_version
+    attributes:
+      label: Local version
+      placeholder: "10.1.2"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - macOS (Apple silicon)
+        - macOS (Intel)
+        - Windows 11
+        - Windows 10
+        - Linux (Ubuntu or Debian)
+        - Linux (Fedora or Red Hat)
+        - Linux (other)
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: os_version
+    attributes:
+      label: Operating system version
+      placeholder: macOS 26.1, Windows 11 24H2, Ubuntu 24.04
+    validations:
+      required: false
+
+  - type: dropdown
+    id: db_engine
+    attributes:
+      label: Database service
+      options:
+        - MySQL 5.6
+        - MySQL 5.7
+        - MySQL 8.0
+        - MySQL 8.4
+        - MariaDB 10.4
+        - MariaDB 10.6
+        - MariaDB 10.11
+        - MariaDB (other version)
+        - Other or not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: php_version
+    attributes:
+      label: PHP version of the site
+      options:
+        - "7.4"
+        - "8.0"
+        - "8.1"
+        - "8.2"
+        - "8.3"
+        - "8.4"
+        - "8.5"
+        - Other or not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: site_type
+    attributes:
+      label: Type of site
+      options:
+        - Single site
+        - Multisite, sub-directories
+        - Multisite, sub-domains
+        - Bedrock or WordPress in a sub-folder
+        - Other layout
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: worked
+    attributes:
+      label: What did you try, and did it work?
+      description: Tick what worked.
+      options:
+        - label: The add-on shows in the Tools tab
+        - label: Scan found the domains
+        - label: Dry run ran and the log looked right
+        - label: Run changed the domains and the site loaded
+        - label: Backup was written
+        - label: Cancel stopped a run
+        - label: The Logs and History tabs work
+        - label: A new import was noticed and the list scanned again
+        - label: Light and dark theme both look right
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: What broke or looked odd, with the log lines if you have them. Remove private data first.
+      render: text
+    validations:
+      required: false

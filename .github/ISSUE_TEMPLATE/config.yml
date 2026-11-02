@@ -1,0 +1,12 @@
+# The chooser shown on "New issue". Blank issues are off, so every report uses a form.
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security problem (private)
+    url: https://github.com/manishsongirkar/local-addon-search-replace/security/advisories/new
+    about: Do not open a public issue for a security problem. Use this private form.
+  - name: Read the troubleshooting guide
+    url: https://github.com/manishsongirkar/local-addon-search-replace#troubleshooting
+    about: The add-on is not in the Tools tab, the list looks old, or Run does nothing? The answer may be here.
+  - name: Local's own support
+    url: https://localwp.com/help-docs/
+    about: Problems with Local itself, such as a port conflict banner or a site that will not start, come from Local, not from this add-on.
