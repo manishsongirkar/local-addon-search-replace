@@ -42,7 +42,7 @@
 		"@types/react-dom": "^16.9.0",
 		"react": "^16.14.0",
 		"typescript": "^5",
-		"vitest": "^2"
+		"vitest": "^5"
 	},
 	"peerDependencies": {
 		"react": ">= 16.4.0"
