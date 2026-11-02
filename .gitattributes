@@ -1,3 +1,6 @@
+# Keep LF on every OS. Windows checkouts would otherwise get CRLF and fail the Biome lint.
+* text=auto eol=lf
+
 # `git clone` gives everything: source, tests and the build in lib/.
 # "Download ZIP" and the source archives of a release use `git archive`, which skips every export-ignore path,
 # so they contain only what the add-on needs to run: lib/, php/, package.json, icon.svg and the docs.
