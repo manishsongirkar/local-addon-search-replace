@@ -6,7 +6,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
-First version. Nothing is released yet.
+## [0.1.0] - 2026-11-02
+
+First version. This is a pre-release: it is tested against real WP-CLI, MySQL and WordPress, but only tried by hand in Local on macOS.
 
 ### Added
 
@@ -61,4 +63,5 @@ First version. Nothing is released yet.
 - Saved files are private (mode 600) and are not followed through a symbolic link. Log files can be read only by their
   own names.
 
-[Unreleased]: https://github.com/manishsongirkar/local-addon-search-replace/commits/main
+[Unreleased]: https://github.com/manishsongirkar/local-addon-search-replace/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/manishsongirkar/local-addon-search-replace/releases/tag/v0.1.0
